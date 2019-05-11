@@ -1,7 +1,6 @@
 package dev.bugakov.nicegirlsvk;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +12,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
+class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
+
+    //адаптер данных для получение 100 заголовков (без загрузки постранично как в Page Library)
+    //API позволяет все загрузить 100 заголовков за 1 запрос и приложение не простаивает,
+    //поэтому не Page Library
 
     private LayoutInflater inflater;
-    private List<Phone> phones;
+    private List<Item> itemsList;
 
-    Context context;
+    Context context;//Global
 
-    DataAdapter(Context context, List<Phone> phones) {
-        this.phones = phones;
-        this.context = context;
+    DataAdapter(Context context, List<Item> itemsList) {
+        this.itemsList = itemsList;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
+
     @Override
     public DataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -34,26 +38,25 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
-        Phone phone = phones.get(position);
+        Item item = itemsList.get(position);
 
         Picasso.with(context)
-                .load(phone.getName())
+                .load(item.getName())
                 .placeholder(R.drawable.ic_ab_app)
-                .error(R.drawable.ic_ab_done)
-                .into(holder.imageView);
-        //holder.imageView.setImageResource(phone.getName());
+                .error(R.drawable.ic_launcher_background)
+                .into(holder.nameView);
     }
 
     @Override
     public int getItemCount() {
-        return phones.size();
+        return itemsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView imageView;
+        final ImageView nameView;
         ViewHolder(View view){
             super(view);
-            imageView = (ImageView)view.findViewById(R.id.image);
+            nameView = view.findViewById(R.id.image);
         }
     }
 }
