@@ -1,35 +1,21 @@
 package dev.bugakov.nicegirlsvk;
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.TelephonyManager;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Toast;
 
 import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKCallback;
-import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
@@ -37,18 +23,14 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.util.VKUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -56,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResult(VKAccessToken res) {
                 makeToast("Успех!");
-                Intent intent = new Intent(MainActivity.this, RequestdActivity.class);
-                startActivity(intent);
             }
 
             @Override
@@ -75,17 +55,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RecyclerView recyclerView = findViewById(R.id.list);
+        if (!MyApplication.isFlag())
+        {
+            Log.i("bs: ", "yep");
+            VKSdk.login(this);
+        }
+            //VKSdk.login(this);
+        Log.i("bs: ", "noup");
+        //VKSdk.login(this);
+
+        RecyclerView recyclerView = findViewById(R.id.list);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setHasFixedSize(true);
 
-        ItemViewModel itemViewModel = ViewModelProviders.of(MainActivity.this).get(ItemViewModel.class);
+        ItemViewModel itemViewModel = ViewModelProviders.of(MainActivity.this)
+                .get(ItemViewModel.class);
         final ItemAdapter adapter = new ItemAdapter(MainActivity.this);
 
-        itemViewModel.itemPagedList.observe(MainActivity.this, new Observer<PagedList<ItemQuestion>>() {
+        itemViewModel.itemPagedList.observe(MainActivity.this,
+                new Observer<PagedList<ItemQuestion>>() {
             @Override
             public void onChanged(@Nullable PagedList<ItemQuestion> items) {
+                Log.i("bs: ", "soup");
 
                 //in case of any changes
                 //submitting the items to adapter
@@ -95,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
+
+        //setUI(recyclerView, Repository.multiobservable(Repository.generateIdsRequest()));
+
         //заполняем recyclerView
         //getList(recyclerView);
 
@@ -118,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         VKRequest request = VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
                 "age_from", "17", "age_to", "18", "count", 5)));
 
-        final ArrayList<Integer> mCatNames= new ArrayList<>();
+        final ArrayList<Integer> mCatNames = new ArrayList<>();
 
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
@@ -143,10 +138,12 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.i("bs: проверка", String.valueOf(mCatNames.get(0)));
 
-                VKRequest request1 = VKApi.users().get((VKParameters.from("user_ids", mCatNames.get(0) + "," + mCatNames.get(1) + "," + mCatNames.get(2) + "," + mCatNames.get(3) + "," + mCatNames.get(4),
+                VKRequest request1 = VKApi.users().get((VKParameters.from("user_ids",
+                        mCatNames.get(0) + "," + mCatNames.get(1) + "," +
+                                mCatNames.get(2) + "," + mCatNames.get(3) + "," + mCatNames.get(4),
                         "fields", "crop_photo")));
 
-                final List<Item> item = new ArrayList<>();
+                final ArrayList<Item> item = new ArrayList<>();
                 //запрашиваем json с url картинки
                 request1.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
@@ -170,8 +167,6 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        Log.i("bs: json с id", response.json.toString());
-
                         DataAdapter adapterMain = new DataAdapter(MainActivity.this, item);
 
                         adapterMain.notifyDataSetChanged();
@@ -194,7 +189,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {}
         });
+
+
+
     }
+
 
 
 
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    /*public void onMyButtonClick(View view) {
+   /* public void onMyButtonClick(View view) {
         VKSdk.login(this);
     }*/
 }

@@ -18,13 +18,3 @@ public class Item {
     }
 
 }
-
-class ItemQuestion {
-    //public long question_id;
-    public String title;
-
-    public ItemQuestion(String title){
-
-        this.title=title;
-    }
-}

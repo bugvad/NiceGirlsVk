@@ -14,14 +14,10 @@ import java.util.List;
 
 class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
-    //адаптер данных для получение 100 заголовков (без загрузки постранично как в Page Library)
-    //API позволяет все загрузить 100 заголовков за 1 запрос и приложение не простаивает,
-    //поэтому не Page Library
-
     private LayoutInflater inflater;
     private List<Item> itemsList;
 
-    Context context;//Global
+    Context context;
 
     DataAdapter(Context context, List<Item> itemsList) {
         this.itemsList = itemsList;

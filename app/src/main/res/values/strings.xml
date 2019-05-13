@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">NiceGirlsVk</string>
+    <string name="app_name" translatable="false">NiceGirlsVk</string>
     <integer name="com_vk_sdk_AppId">6978495</integer>
 </resources>
