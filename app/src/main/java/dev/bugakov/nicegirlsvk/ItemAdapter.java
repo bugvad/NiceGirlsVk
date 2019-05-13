@@ -48,12 +48,12 @@ public class ItemAdapter extends PagedListAdapter<ItemQuestion, ItemAdapter.Item
             new DiffUtil.ItemCallback<ItemQuestion>() {
                 @Override
                 public boolean areItemsTheSame(ItemQuestion oldItem, ItemQuestion newItem) {
-                    return oldItem.title.equals(newItem.title);
+                    return oldItem.equals(newItem);
                 }
 
                 @Override
                 public boolean areContentsTheSame(ItemQuestion oldItem, ItemQuestion newItem) {
-                    return oldItem.equals(newItem);
+                    return oldItem.title.equals(newItem.title);
                 }
             };
 

@@ -22,6 +22,7 @@ import java.util.List;
 
 import static dev.bugakov.nicegirlsvk.Repository.finishFlow1;
 import static dev.bugakov.nicegirlsvk.Repository.finishFlow2;
+import static dev.bugakov.nicegirlsvk.Repository.finishFlow3;
 
 public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
 
@@ -33,11 +34,10 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
         int methodCode = 0;
 
         Log.i("bs: ", "error");
-        /*finishFlow2(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,6, methodCode)),
+        finishFlow2(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,5, methodCode)),
                 callback);
 
-        VKRequest request = Repository.generateIdsRequest(PAGE_SIZE , -1, methodCode);*/
-
+/*
         VKRequest request = VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
                 "age_from", "17", "age_to", "18", "count", 5)));
 
@@ -119,7 +119,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
             public void onError(VKError error) {}
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {}
-        });
+        });*/
 
     }
 
@@ -129,13 +129,12 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
 
         Log.i("bs: ", "inside loadBefore");
 
-       /* int methodCode = -1;
+        int methodCode = -1;
 
-        finishFlow1(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,6, methodCode)),
-                callback, params.key);*/
+        finishFlow1(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, methodCode)),
+                callback, params.key);
 
-        //VKRequest request = Repository.generateIdsRequest(PAGE_SIZE , params.key, methodCode);
-
+/*
         VKRequest request = VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
                 "age_from", "17", "age_to", "18", "count", 5, "offset", PAGE_SIZE * (params.key - 1))));
 
@@ -212,26 +211,20 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
             public void onError(VKError error) {}
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {}
-        });
+        });*/
 
     }
 
     //загрузка следующей страницы
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, ItemQuestion> callback) {
-        /*int methodCode = 1;
+        int methodCode = 1;
 
-        finishFlow1(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,6, methodCode)),
-                callback, params.key);*/
-
-        //VKRequest request = Repository.generateIdsRequest(PAGE_SIZE , params.key, methodCode);
-
-        Log.i("bs: ", "inside loadAfter");
-
+        finishFlow3(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, methodCode)),
+                callback, params.key);
+/*
         VKRequest request = VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
                 "age_from", "17", "age_to", "18", "count", 5, "offset", PAGE_SIZE * (params.key - 1))));
-
-
 
         Log.i("bs: след. страница: ", (PAGE_SIZE * (params.key - 1)) + "");
 
@@ -344,6 +337,6 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
             public void onError(VKError error) {}
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {}
-        });
+        });*/
     }
 }

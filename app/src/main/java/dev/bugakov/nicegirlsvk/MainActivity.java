@@ -167,10 +167,10 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        DataAdapter adapterMain = new DataAdapter(MainActivity.this, item);
+                        //DataAdapter adapterMain = new DataAdapter(MainActivity.this, item);
 
-                        adapterMain.notifyDataSetChanged();
-                        recyclerView.setAdapter(adapterMain);
+                        //adapterMain.notifyDataSetChanged();
+                        //recyclerView.setAdapter(adapterMain);
                     }
 
                     @Override

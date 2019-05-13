@@ -14,7 +14,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -33,20 +36,17 @@ public class Repository {
 
     public static VKRequest generateIdsRequest(int page_size, int key, int state) {
 
-        int offsetValue = -2;
 
         if (state == -1 || state == 1)
         {
-            offsetValue = page_size * (key - 1);
-        }
-        else if (state == 0)
-        {
-            offsetValue = 5;
+            int offsetValue = page_size * (key - 1);
+            return VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
+                    "age_from", "17", "age_to", "18", "count", 5, "offset", offsetValue)));
         }
 
-        VKRequest request = VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
-                "age_from", "17", "age_to", "18", "count", offsetValue)));
-        return request;
+        return VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
+                "age_from", "17", "age_to", "18", "count", 5)));
+
     }
 
     static ArrayList<Integer> parseIdsJson(VKResponse response) {
@@ -80,10 +80,52 @@ public class Repository {
     }
 
     static ArrayList<ItemQuestion> parseUrlJson(VKResponse response) {
-        ArrayList<ItemQuestion> finalItem = null;
+        final ArrayList<ItemQuestion> finalItem = new ArrayList<>();
         JSONObject json = response.json;
 
         try {
+            JSONArray jsonObject2 = json.getJSONArray("response");
+            for (int i = 0; i < jsonObject2.length(); i++) {
+                JSONObject jsonObject3 = jsonObject2.getJSONObject(i);
+                try
+                {
+                    String jsonObject4 = jsonObject3
+                            .getJSONObject("crop_photo")
+                            .getJSONObject("photo")
+                            .getString("photo_1280");
+
+                    Log.i("bs: url: " + i, jsonObject4);
+                    finalItem.add(new ItemQuestion(jsonObject4));
+                }
+                catch (org.json.JSONException e)
+                {
+                    try {
+                        String jsonObject4 = jsonObject3
+                                .getJSONObject("crop_photo")
+                                .getJSONObject("photo")
+                                .getString("photo_75");
+
+                        Log.i("bs: url: " + i, jsonObject4);
+                        finalItem.add(new ItemQuestion(jsonObject4));
+                    }
+                    catch (org.json.JSONException k) {
+                        finalItem.add(new ItemQuestion("https://vk.com/images/camera_200.png?ava=1"));
+                    }
+                }
+            }
+
+        } catch (JSONException e) {
+            //i.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString();
+            Log.i("bs: ", "error: text: " + json.toString());
+            Log.i("bs: ", "error: text: " + sStackTrace);
+
+        }
+
+        /*try {
             JSONArray jsonObject2 = json.getJSONArray("response");
 
             for (int i = 0; i < jsonObject2.length(); i++) {
@@ -92,11 +134,25 @@ public class Repository {
                         .getJSONObject("crop_photo")
                         .getJSONObject("photo")
                         .getString("photo_1280");
-                finalItem.add(new ItemQuestion(jsonObject4));
+
+                if (jsonObject4 == null) {
+                    jsonObject4 = jsonObject3
+                            .getJSONObject("crop_photo")
+                            .getJSONObject("photo")
+                            .getString("photo_75");
+                }
+
+                Log.i("bs: jsonObject4: ", jsonObject4);
+                if (jsonObject4 == null) {
+                    finalItem.add(new ItemQuestion("https://vk.com/images/camera_200.png?ava=1"));
+                }
+                else{
+                    finalItem.add(new ItemQuestion(jsonObject4));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return finalItem;
     }
@@ -230,6 +286,36 @@ public class Repository {
                 }
             };
             observableLocal2.subscribe(observer);
+    }
+
+
+    public static void finishFlow3(Observable<ArrayList<ItemQuestion>> observableLocal2,
+                                   PageKeyedDataSource.LoadCallback<Integer, ItemQuestion> callback, int key)
+    {
+        io.reactivex.Observer<ArrayList<ItemQuestion>> observer =
+                new io.reactivex.Observer<ArrayList<ItemQuestion>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<ItemQuestion> items) {
+                        final Integer adjacentKey = key + 1;
+                        callback.onResult(items, adjacentKey);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                };
+        observableLocal2.subscribe(observer);
     }
 
 
