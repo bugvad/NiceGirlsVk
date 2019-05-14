@@ -10,6 +10,8 @@ import dev.bugakov.nicegirlsvk.model.ItemDataSource;
 import dev.bugakov.nicegirlsvk.model.ItemDataSourceFactory;
 import dev.bugakov.nicegirlsvk.model.Item;
 
+import static dev.bugakov.nicegirlsvk.model.Constant.PAGE_SIZE;
+
 public class ItemViewModel extends ViewModel {
 
     LiveData<PagedList<Item>> itemPagedList;
@@ -23,7 +25,7 @@ public class ItemViewModel extends ViewModel {
         PagedList.Config pagedListConfig =
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
-                        .setPageSize(ItemDataSource.PAGE_SIZE).build();
+                        .setPageSize(PAGE_SIZE).build();
 
         itemPagedList = (new LivePagedListBuilder(itemDataSourceFactory, pagedListConfig))
                 .build();
