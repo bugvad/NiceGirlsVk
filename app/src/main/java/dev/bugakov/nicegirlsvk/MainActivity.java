@@ -33,6 +33,8 @@ import dev.bugakov.nicegirlsvk.adapter.ItemAdapter;
 import dev.bugakov.nicegirlsvk.model.Item;
 import dev.bugakov.nicegirlsvk.model.Item;
 
+import static dev.bugakov.nicegirlsvk.view.Utils.makeToast;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -40,12 +42,13 @@ public class MainActivity extends AppCompatActivity {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                makeToast("Успех!");
+                makeToast("Успех!",
+                        MainActivity.this);
             }
 
             @Override
             public void onError(VKError error) {
-                makeToast("Ощибка попробуйте еще раз!");
+                makeToast("Ощибка попробуйте еще раз!", MainActivity.this);
 
             }
         })) {
@@ -60,12 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (!MyApplication.isFlag())
         {
-            Log.i("bs: ", "yep");
             VKSdk.login(this);
         }
-            //VKSdk.login(this);
-        Log.i("bs: ", "noup");
-        //VKSdk.login(this);
 
         RecyclerView recyclerView = findViewById(R.id.list);
 
@@ -82,19 +81,12 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable PagedList<Item> items) {
                 Log.i("bs: ", "soup");
 
-                //in case of any changes
-                //submitting the items to adapter
                 adapter.submitList(items);
 
             }
         });
 
         recyclerView.setAdapter(adapter);
-
-        //setUI(recyclerView, Repository.multiobservable(Repository.generateIdsRequest()));
-
-        //заполняем recyclerView
-        //getList(recyclerView);
 
         //swipe-to-refresh
       /*  mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -109,107 +101,4 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);*/
     }
-
-    //проверки и получение
-    public void getList(final RecyclerView recyclerView) {
-
-        VKRequest request = VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
-                "age_from", "17", "age_to", "18", "count", 5)));
-
-        final ArrayList<Integer> mCatNames = new ArrayList<>();
-
-        request.executeWithListener(new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-
-                //извлекаем json
-                JSONObject json = response.json;
-
-                Log.i("bs: полученный чик: ", response.json.toString());
-
-                try {
-                    JSONObject jsonObject1 = json.getJSONObject("response");
-                    JSONArray jsonObject2 = jsonObject1.getJSONArray("items");
-                    for (int i = 0; i < jsonObject2.length(); i++) {
-                        mCatNames.add((jsonObject2.getJSONObject(i).getInt("id")));
-                        Log.i("bs: id: " + i, mCatNames.get(i) + "");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.i("bs: ", "fail");
-                }
-
-                Log.i("bs: проверка", String.valueOf(mCatNames.get(0)));
-
-                VKRequest request1 = VKApi.users().get((VKParameters.from("user_ids",
-                        mCatNames.get(0) + "," + mCatNames.get(1) + "," +
-                                mCatNames.get(2) + "," + mCatNames.get(3) + "," + mCatNames.get(4),
-                        "fields", "crop_photo")));
-
-                final ArrayList<Item> item = new ArrayList<>();
-                //запрашиваем json с url картинки
-                request1.executeWithListener(new VKRequest.VKRequestListener() {
-                    @Override
-                    public void onComplete(VKResponse response) {
-                        JSONObject json = response.json;
-
-                        try {
-                            JSONArray jsonObject2 = json.getJSONArray("response");
-                            for (int i = 0; i < jsonObject2.length(); i++) {
-                                JSONObject jsonObject3 = jsonObject2.getJSONObject(i);
-                                String jsonObject4 = jsonObject3
-                                        .getJSONObject("crop_photo")
-                                        .getJSONObject("photo")
-                                        .getString("photo_1280");
-
-                                Log.i("bs: url: " + i, jsonObject4);
-                                item.add(new Item(jsonObject4));
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //DataAdapter adapterMain = new DataAdapter(MainActivity.this, item);
-
-                        //adapterMain.notifyDataSetChanged();
-                        //recyclerView.setAdapter(adapterMain);
-                    }
-
-                    @Override
-                    public void onError(VKError error) {
-                    }
-
-                    @Override
-                    public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-                    }
-
-
-                });
-            }
-            @Override
-            public void onError(VKError error) {}
-            @Override
-            public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {}
-        });
-
-
-
-    }
-
-
-
-
-    public void makeToast(String messageText)
-    {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                messageText,
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-   /* public void onMyButtonClick(View view) {
-        VKSdk.login(this);
-    }*/
 }

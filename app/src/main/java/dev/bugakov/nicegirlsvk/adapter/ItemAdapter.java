@@ -17,7 +17,6 @@ import dev.bugakov.nicegirlsvk.R;
 
 public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHolder> {
 
-    //адаптер данных для Paging List
     private Context mCtx;
 
     public ItemAdapter(Context mCtx) {

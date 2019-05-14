@@ -125,35 +125,6 @@ public class Repository {
 
         }
 
-        /*try {
-            JSONArray jsonObject2 = json.getJSONArray("response");
-
-            for (int i = 0; i < jsonObject2.length(); i++) {
-                JSONObject jsonObject3 = jsonObject2.getJSONObject(i);
-                String jsonObject4 = jsonObject3
-                        .getJSONObject("crop_photo")
-                        .getJSONObject("photo")
-                        .getString("photo_1280");
-
-                if (jsonObject4 == null) {
-                    jsonObject4 = jsonObject3
-                            .getJSONObject("crop_photo")
-                            .getJSONObject("photo")
-                            .getString("photo_75");
-                }
-
-                Log.i("bs: jsonObject4: ", jsonObject4);
-                if (jsonObject4 == null) {
-                    finalItem.add(new Item("https://vk.com/images/camera_200.png?ava=1"));
-                }
-                else{
-                    finalItem.add(new Item(jsonObject4));
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
         return finalItem;
     }
 
@@ -165,7 +136,6 @@ public class Repository {
 
                             @Override
                             public void onComplete(VKResponse response) {
-                                //Do complete stuff
                                 ArrayList<Integer> IdsJson = parseIdsJson(response);
                                 VKRequest UrlRequest = generateUrlRequest(IdsJson);
 
@@ -212,7 +182,6 @@ public class Repository {
 
                             @Override
                             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-                                //I don't really believe in progress
                                 // subscriber.onError(new Exception());
                             }
                         }));

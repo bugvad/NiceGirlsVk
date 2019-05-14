@@ -12,7 +12,6 @@ import dev.bugakov.nicegirlsvk.model.Item;
 
 public class ItemViewModel extends ViewModel {
 
-    //создание livedata для PagedList и PagedKeyedDataSource
     LiveData<PagedList<Item>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, Item>> liveDataSource;
 
