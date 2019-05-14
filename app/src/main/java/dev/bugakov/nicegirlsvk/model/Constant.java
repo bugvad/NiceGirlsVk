@@ -1,4 +1,4 @@
-package dev.bugakov.nicegirlsvk;
+package dev.bugakov.nicegirlsvk.model;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
