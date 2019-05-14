@@ -6,10 +6,10 @@ import android.arch.paging.PageKeyedDataSource;
 
 public class ItemDataSourceFactory extends DataSource.Factory {
 
-    private MutableLiveData<PageKeyedDataSource<Integer, ItemQuestion>> itemLiveDataSource = new MutableLiveData<>();
+    private MutableLiveData<PageKeyedDataSource<Integer, Item>> itemLiveDataSource = new MutableLiveData<>();
 
     @Override
-    public DataSource<Integer, ItemQuestion> create() {
+    public DataSource<Integer, Item> create() {
         ItemDataSource itemDataSource = new ItemDataSource();
 
         itemLiveDataSource.postValue(itemDataSource);
@@ -17,7 +17,7 @@ public class ItemDataSourceFactory extends DataSource.Factory {
         return itemDataSource;
     }
 
-    public MutableLiveData<PageKeyedDataSource<Integer, ItemQuestion>> getItemLiveDataSource() {
+    public MutableLiveData<PageKeyedDataSource<Integer, Item>> getItemLiveDataSource() {
         return itemLiveDataSource;
     }
 }

@@ -10,13 +10,13 @@ import static dev.bugakov.nicegirlsvk.network.Repository.finishFlow1;
 import static dev.bugakov.nicegirlsvk.network.Repository.finishFlow2;
 import static dev.bugakov.nicegirlsvk.network.Repository.finishFlow3;
 
-public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
+public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
 
     public static final int PAGE_SIZE = 5;
     private static final int FIRST_PAGE = 1;
 
     @Override
-    public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, ItemQuestion> callback) {
+    public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, Item> callback) {
         int methodCode = 0;
 
         Log.i("bs: ", "error");
@@ -57,7 +57,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                                 "," + mCatNames.get(3) + "," + mCatNames.get(4),
                         "fields", "crop_photo")));
 
-                final List<ItemQuestion> item = new ArrayList<>();
+                final List<Item> item = new ArrayList<>();
                 //запрашиваем json с url картинки
                 request1.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
@@ -74,7 +74,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                                         .getString("photo_1280");
 
                                 Log.i("bs: url: " + i, jsonObject4);
-                                item.add(new ItemQuestion(jsonObject4));
+                                item.add(new Item(jsonObject4));
                             }
 
                         } catch (JSONException e) {
@@ -111,7 +111,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
 
     //загрузка предыдущей страницы
     @Override
-    public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, ItemQuestion> callback) {
+    public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Item> callback) {
 
         Log.i("bs: ", "inside loadBefore");
 
@@ -152,7 +152,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                 VKRequest request1 = VKApi.users().get((VKParameters.from("user_ids", mCatNames.get(0) + "," + mCatNames.get(1) + "," + mCatNames.get(2) + "," + mCatNames.get(3) + "," + mCatNames.get(4),
                         "fields", "crop_photo")));
 
-                final List<ItemQuestion> item = new ArrayList<>();
+                final List<Item> item = new ArrayList<>();
                 //запрашиваем json с url картинки
                 request1.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
@@ -169,7 +169,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                                         .getString("photo_1280");
 
                                 Log.i("bs: url: " + i, jsonObject4);
-                                item.add(new ItemQuestion(jsonObject4));
+                                item.add(new Item(jsonObject4));
                             }
 
                         } catch (JSONException e) {
@@ -203,7 +203,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
 
     //загрузка следующей страницы
     @Override
-    public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, ItemQuestion> callback) {
+    public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Item> callback) {
         int methodCode = 1;
 
         finishFlow3(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, methodCode)),
@@ -255,7 +255,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                 VKRequest request1 = VKApi.users().get((VKParameters.from("user_ids", mCatNames.get(0) + "," + mCatNames.get(1) + "," + mCatNames.get(2) + "," + mCatNames.get(3) + "," + mCatNames.get(4),
                         "fields", "crop_photo")));
 
-                final List<ItemQuestion> item = new ArrayList<>();
+                final List<Item> item = new ArrayList<>();
                 //запрашиваем json с url картинки
                 request1.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
@@ -275,7 +275,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                                             .getString("photo_1280");
 
                                     Log.i("bs: url: " + i, jsonObject4);
-                                    item.add(new ItemQuestion(jsonObject4));
+                                    item.add(new Item(jsonObject4));
                                 }
                                 catch (org.json.JSONException e)
                                 {
@@ -286,10 +286,10 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
                                                 .getString("photo_75");
 
                                         Log.i("bs: url: " + i, jsonObject4);
-                                        item.add(new ItemQuestion(jsonObject4));
+                                        item.add(new Item(jsonObject4));
                                     }
                                     catch (org.json.JSONException k) {
-                                        item.add(new ItemQuestion("https://vk.com/images/camera_200.png?ava=1"));
+                                        item.add(new Item("https://vk.com/images/camera_200.png?ava=1"));
                                     }
                                 }
                             }

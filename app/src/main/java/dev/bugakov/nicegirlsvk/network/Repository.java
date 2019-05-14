@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
-import dev.bugakov.nicegirlsvk.model.ItemQuestion;
+import dev.bugakov.nicegirlsvk.model.Item;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
@@ -79,8 +79,8 @@ public class Repository {
         return request;
     }
 
-    static ArrayList<ItemQuestion> parseUrlJson(VKResponse response) {
-        final ArrayList<ItemQuestion> finalItem = new ArrayList<>();
+    static ArrayList<Item> parseUrlJson(VKResponse response) {
+        final ArrayList<Item> finalItem = new ArrayList<>();
         JSONObject json = response.json;
 
         try {
@@ -95,7 +95,7 @@ public class Repository {
                             .getString("photo_1280");
 
                     Log.i("bs: url: " + i, jsonObject4);
-                    finalItem.add(new ItemQuestion(jsonObject4));
+                    finalItem.add(new Item(jsonObject4));
                 }
                 catch (org.json.JSONException e)
                 {
@@ -106,10 +106,10 @@ public class Repository {
                                 .getString("photo_75");
 
                         Log.i("bs: url: " + i, jsonObject4);
-                        finalItem.add(new ItemQuestion(jsonObject4));
+                        finalItem.add(new Item(jsonObject4));
                     }
                     catch (org.json.JSONException k) {
-                        finalItem.add(new ItemQuestion("https://vk.com/images/camera_200.png?ava=1"));
+                        finalItem.add(new Item("https://vk.com/images/camera_200.png?ava=1"));
                     }
                 }
             }
@@ -144,10 +144,10 @@ public class Repository {
 
                 Log.i("bs: jsonObject4: ", jsonObject4);
                 if (jsonObject4 == null) {
-                    finalItem.add(new ItemQuestion("https://vk.com/images/camera_200.png?ava=1"));
+                    finalItem.add(new Item("https://vk.com/images/camera_200.png?ava=1"));
                 }
                 else{
-                    finalItem.add(new ItemQuestion(jsonObject4));
+                    finalItem.add(new Item(jsonObject4));
                 }
             }
         } catch (JSONException e) {
@@ -190,16 +190,16 @@ public class Repository {
 
 
 
-    static Observable<ArrayList<ItemQuestion>> makeUrlObservable(VKRequest request)
+    static Observable<ArrayList<Item>> makeUrlObservable(VKRequest request)
     {
-        Observable<ArrayList<ItemQuestion>> croco =
+        Observable<ArrayList<Item>> croco =
                 Observable.create(subscriber -> request
                         .executeWithListener(new VKRequest.VKRequestListener() {
 
                             @Override
                             public void onComplete(VKResponse response) {
 
-                                ArrayList<ItemQuestion> Urls = parseUrlJson(response);
+                                ArrayList<Item> Urls = parseUrlJson(response);
 
                                 subscriber.onNext(Urls);
                                 subscriber.onComplete();
@@ -220,26 +220,26 @@ public class Repository {
         return croco;
     }
 
-    public static Observable<ArrayList<ItemQuestion>> multiobservable(VKRequest request)
+    public static Observable<ArrayList<Item>> multiobservable(VKRequest request)
     {
-        Observable<ArrayList<ItemQuestion>> observableLocal2 = makeIdObservable(request).flatMap(address -> {
+        Observable<ArrayList<Item>> observableLocal2 = makeIdObservable(request).flatMap(address -> {
             return makeUrlObservable(address);
         });
         return observableLocal2;
     }
 
-    public static void finishFlow2(Observable<ArrayList<ItemQuestion>> observableLocal2,
-                            PageKeyedDataSource.LoadInitialCallback<Integer, ItemQuestion> callback){
+    public static void finishFlow2(Observable<ArrayList<Item>> observableLocal2,
+                            PageKeyedDataSource.LoadInitialCallback<Integer, Item> callback){
 
-        io.reactivex.Observer<ArrayList<ItemQuestion>> observer =
-                new io.reactivex.Observer<ArrayList<ItemQuestion>>() {
+        io.reactivex.Observer<ArrayList<Item>> observer =
+                new io.reactivex.Observer<ArrayList<Item>>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(ArrayList<ItemQuestion> items) {
+            public void onNext(ArrayList<Item> items) {
                 callback.onResult(items, null, 2);
             }
 
@@ -256,21 +256,21 @@ public class Repository {
         observableLocal2.subscribe(observer);
     }
 
-    public static void finishFlow1(Observable<ArrayList<ItemQuestion>> observableLocal2,
-                            PageKeyedDataSource.LoadCallback<Integer, ItemQuestion> callback, int key)
+    public static void finishFlow1(Observable<ArrayList<Item>> observableLocal2,
+                            PageKeyedDataSource.LoadCallback<Integer, Item> callback, int key)
     {
 
 
 
-                io.reactivex.Observer<ArrayList<ItemQuestion>> observer =
-                        new io.reactivex.Observer<ArrayList<ItemQuestion>>() {
+                io.reactivex.Observer<ArrayList<Item>> observer =
+                        new io.reactivex.Observer<ArrayList<Item>>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
                 }
 
                 @Override
-                public void onNext(ArrayList<ItemQuestion> items) {
+                public void onNext(ArrayList<Item> items) {
                     final Integer adjacentKey = (key > 1) ? key - 1 : null;
                     callback.onResult(items, adjacentKey);
                 }
@@ -289,18 +289,18 @@ public class Repository {
     }
 
 
-    public static void finishFlow3(Observable<ArrayList<ItemQuestion>> observableLocal2,
-                                   PageKeyedDataSource.LoadCallback<Integer, ItemQuestion> callback, int key)
+    public static void finishFlow3(Observable<ArrayList<Item>> observableLocal2,
+                                   PageKeyedDataSource.LoadCallback<Integer, Item> callback, int key)
     {
-        io.reactivex.Observer<ArrayList<ItemQuestion>> observer =
-                new io.reactivex.Observer<ArrayList<ItemQuestion>>() {
+        io.reactivex.Observer<ArrayList<Item>> observer =
+                new io.reactivex.Observer<ArrayList<Item>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ArrayList<ItemQuestion> items) {
+                    public void onNext(ArrayList<Item> items) {
                         final Integer adjacentKey = key + 1;
                         callback.onResult(items, adjacentKey);
                     }

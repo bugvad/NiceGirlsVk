@@ -12,10 +12,10 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import dev.bugakov.nicegirlsvk.model.ItemQuestion;
+import dev.bugakov.nicegirlsvk.model.Item;
 import dev.bugakov.nicegirlsvk.R;
 
-public class ItemAdapter extends PagedListAdapter<ItemQuestion, ItemAdapter.ItemViewHolder> {
+public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHolder> {
 
     //адаптер данных для Paging List
     private Context mCtx;
@@ -34,27 +34,27 @@ public class ItemAdapter extends PagedListAdapter<ItemQuestion, ItemAdapter.Item
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ItemQuestion item = getItem(position);
+        Item item = getItem(position);
 
         if (item != null) {
             Picasso.with(mCtx)
-                    .load(item.title)
+                    .load(item.name)
                     .placeholder(R.drawable.ic_ab_app)
                     .error(R.drawable.ic_launcher_background)
                     .into(holder.imageView);
         }
     }
 
-    private static DiffUtil.ItemCallback<ItemQuestion> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<ItemQuestion>() {
+    private static DiffUtil.ItemCallback<Item> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Item>() {
                 @Override
-                public boolean areItemsTheSame(ItemQuestion oldItem, ItemQuestion newItem) {
+                public boolean areItemsTheSame(Item oldItem, Item newItem) {
                     return oldItem.equals(newItem);
                 }
 
                 @Override
-                public boolean areContentsTheSame(ItemQuestion oldItem, ItemQuestion newItem) {
-                    return oldItem.title.equals(newItem.title);
+                public boolean areContentsTheSame(Item oldItem, Item newItem) {
+                    return oldItem.name.equals(newItem.name);
                 }
             };
 

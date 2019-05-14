@@ -8,13 +8,13 @@ import android.arch.paging.PagedList;
 
 import dev.bugakov.nicegirlsvk.model.ItemDataSource;
 import dev.bugakov.nicegirlsvk.model.ItemDataSourceFactory;
-import dev.bugakov.nicegirlsvk.model.ItemQuestion;
+import dev.bugakov.nicegirlsvk.model.Item;
 
 public class ItemViewModel extends ViewModel {
 
     //создание livedata для PagedList и PagedKeyedDataSource
-    LiveData<PagedList<ItemQuestion>> itemPagedList;
-    LiveData<PageKeyedDataSource<Integer, ItemQuestion>> liveDataSource;
+    LiveData<PagedList<Item>> itemPagedList;
+    LiveData<PageKeyedDataSource<Integer, Item>> liveDataSource;
 
     public ItemViewModel() {
         ItemDataSourceFactory itemDataSourceFactory = new ItemDataSourceFactory();

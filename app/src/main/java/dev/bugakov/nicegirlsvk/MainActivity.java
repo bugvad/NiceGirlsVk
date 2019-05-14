@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import dev.bugakov.nicegirlsvk.adapter.ItemAdapter;
 import dev.bugakov.nicegirlsvk.model.Item;
-import dev.bugakov.nicegirlsvk.model.ItemQuestion;
+import dev.bugakov.nicegirlsvk.model.Item;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
         final ItemAdapter adapter = new ItemAdapter(MainActivity.this);
 
         itemViewModel.itemPagedList.observe(MainActivity.this,
-                new Observer<PagedList<ItemQuestion>>() {
+                new Observer<PagedList<Item>>() {
             @Override
-            public void onChanged(@Nullable PagedList<ItemQuestion> items) {
+            public void onChanged(@Nullable PagedList<Item> items) {
                 Log.i("bs: ", "soup");
 
                 //in case of any changes
