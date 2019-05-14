@@ -1,4 +1,4 @@
-package dev.bugakov.nicegirlsvk;
+package dev.bugakov.nicegirlsvk.model;
 
 public class ItemQuestion {
 

@@ -1,4 +1,4 @@
-package dev.bugakov.nicegirlsvk;
+package dev.bugakov.nicegirlsvk.model;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.DataSource;

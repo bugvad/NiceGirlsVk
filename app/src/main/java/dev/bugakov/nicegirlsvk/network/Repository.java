@@ -1,4 +1,4 @@
-package dev.bugakov.nicegirlsvk;
+package dev.bugakov.nicegirlsvk.network;
 
 import android.arch.paging.PageKeyedDataSource;
 import android.util.Log;
@@ -17,8 +17,8 @@ import org.json.JSONObject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.List;
 
+import dev.bugakov.nicegirlsvk.model.ItemQuestion;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 

@@ -1,28 +1,14 @@
-package dev.bugakov.nicegirlsvk;
+package dev.bugakov.nicegirlsvk.model;
 
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
-import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
+import dev.bugakov.nicegirlsvk.network.Repository;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import static dev.bugakov.nicegirlsvk.Repository.finishFlow1;
-import static dev.bugakov.nicegirlsvk.Repository.finishFlow2;
-import static dev.bugakov.nicegirlsvk.Repository.finishFlow3;
+import static dev.bugakov.nicegirlsvk.network.Repository.finishFlow1;
+import static dev.bugakov.nicegirlsvk.network.Repository.finishFlow2;
+import static dev.bugakov.nicegirlsvk.network.Repository.finishFlow3;
 
 public class ItemDataSource extends PageKeyedDataSource<Integer, ItemQuestion> {
 
