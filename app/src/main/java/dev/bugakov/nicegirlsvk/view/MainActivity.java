@@ -8,6 +8,7 @@ import android.app.ActionBar;
 import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,24 +41,7 @@ import static dev.bugakov.nicegirlsvk.view.Utils.makeToast;
 
 public class MainActivity extends AppCompatActivity implements AddPhotoBottomDialogFragment.onsomeEventListener2 {
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
-            @Override
-            public void onResult(VKAccessToken res) {
-                makeToast("Успех!",
-                        MainActivity.this);
-            }
 
-            @Override
-            public void onError(VKError error) {
-                makeToast("Ощибка попробуйте еще раз!", MainActivity.this);
-
-            }
-        })) {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,9 +60,16 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
         setTitle("");
         //getSupportActionBar().setIcon(R.drawable.favicon150x150);
 
-        if (!MyApplication.isFlag())
+/*
+        if (MyApplication.isFlag2())
         {
-            VKSdk.login(this);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+*/
+        if (!Constant.checkInternetConnection(this)){
+            DialogFragment dialogFragment = new FireMissilesDialogFragment();
+            dialogFragment.show(getFragmentManager(), "dialogFragment");
         }
 
         RecyclerView recyclerView = findViewById(R.id.list);

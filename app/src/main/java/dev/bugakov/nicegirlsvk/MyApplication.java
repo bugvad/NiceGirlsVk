@@ -10,9 +10,14 @@ import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
 
+import dev.bugakov.nicegirlsvk.view.LoginActivity;
 import dev.bugakov.nicegirlsvk.view.MainActivity;
 
 public class MyApplication extends Application {
+
+    public static void setFlag(boolean flag) {
+        MyApplication.flag = flag;
+    }
 
     static boolean flag = true;
 
@@ -20,17 +25,15 @@ public class MyApplication extends Application {
         return flag;
     }
 
-
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(@Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken) {
             Log.i("message_real:", "OKK");
 
             if (newToken == null) {
-                Toast.makeText(MyApplication.this, "AccessToken invalidated", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyApplication.this, "Авторизуйтесь ВКонтакте", Toast.LENGTH_LONG).show();
                 Log.i("message_real:", "OK");
-                flag = false;
-                Intent intent = new Intent(MyApplication.this, MainActivity.class);
+                Intent intent = new Intent(MyApplication.this, LoginActivity.class);
                 startActivity(intent);
                 /*Intent intent = new Intent(MyApplication.this, MainActivity.class);
                 intent.putExtra("flag", false);
