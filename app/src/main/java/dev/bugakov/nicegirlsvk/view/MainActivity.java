@@ -53,20 +53,11 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //MainActivity.getSupportActionBar().setIcon(getDrawable(R.mipmap.logo));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         setTitle("");
-        //getSupportActionBar().setIcon(R.drawable.favicon150x150);
 
-/*
-        if (MyApplication.isFlag2())
-        {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-*/
         if (!Constant.checkInternetConnection(this)){
             DialogFragment dialogFragment = new FireMissilesDialogFragment();
             dialogFragment.show(getFragmentManager(), "dialogFragment");
@@ -85,35 +76,17 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
                 new Observer<PagedList<Item>>() {
                     @Override
                     public void onChanged(@Nullable PagedList<Item> items) {
-                        Log.i("bs: ", "soup");
-
                         adapter.submitList(items);
 
                     }
                 });
 
         recyclerView.setAdapter(adapter);
-
-        //swipe-to-refresh
-      /*  mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                getList(recyclerView);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-        recyclerView.setAdapter(adapter);*/
     }
 
 
     @Override
     public void someEvent2() {
-        Log.i("ds: bull shit", Constant.getFrom() + " " + Constant.getTo());
-
-
         ItemDataSourceFactory.getItemDataSource().invalidate();
         RecyclerView recyclerView = findViewById(R.id.list);
 
@@ -128,8 +101,6 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
                 new Observer<PagedList<Item>>() {
                     @Override
                     public void onChanged(@Nullable PagedList<Item> items) {
-                        Log.i("bs: ", "soup");
-
                         adapter.submitList(items);
 
                     }

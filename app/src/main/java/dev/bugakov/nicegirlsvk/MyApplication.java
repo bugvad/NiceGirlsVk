@@ -28,17 +28,10 @@ public class MyApplication extends Application {
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(@Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken) {
-            Log.i("message_real:", "OKK");
-
             if (newToken == null) {
                 Toast.makeText(MyApplication.this, "Авторизуйтесь ВКонтакте", Toast.LENGTH_LONG).show();
-                Log.i("message_real:", "OK");
                 Intent intent = new Intent(MyApplication.this, LoginActivity.class);
                 startActivity(intent);
-                /*Intent intent = new Intent(MyApplication.this, MainActivity.class);
-                intent.putExtra("flag", false);
-                startActivity(intent);*/
-                // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
         }
     };
@@ -46,12 +39,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("message_real:", "KOK");
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
-        Log.i("message_real:", "sOK");
-        //Intent intent = new Intent(MyApplication.this, MainActivity.class);
-        //startActivity(intent);
     }
 
 

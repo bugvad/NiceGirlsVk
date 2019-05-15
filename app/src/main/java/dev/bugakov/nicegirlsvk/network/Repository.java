@@ -57,11 +57,9 @@ public class Repository {
             JSONArray jsonObject2 = jsonObject1.getJSONArray("items");
             for (int i = 0; i < jsonObject2.length(); i++) {
                 mCatNames.add((jsonObject2.getJSONObject(i).getInt("id")));
-                Log.i("bs: id: " + i, mCatNames.get(i) + "");
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-            Log.i("bs: ", "fail");
+            //do nothing
         }
         return mCatNames;
     }
@@ -94,36 +92,16 @@ public class Repository {
                             .getJSONObject("photo")
                             .getString("photo_1280");
 
-                    Log.i("bs: url: " + i, jsonObject4);
                     finalItem.add(new Item(jsonObject4));
                 }
                 catch (org.json.JSONException e)
                 {
-                    //finalItem.add(new Item("https://pp.userapi.com/c855636/v855636140/42a6f/U2KXLtNavQ0.jpg"));
-                    /*try {
-                        String jsonObject4 = jsonObject3
-                                .getJSONObject("crop_photo")
-                                .getJSONObject("photo")
-                                .getString("photo_75");
-
-                        Log.i("bs: url: " + i, jsonObject4);
-                        finalItem.add(new Item(jsonObject4));
-                    }
-                    catch (org.json.JSONException k) {
-                        finalItem.add(new Item("https://pp.userapi.com/c855636/v855636140/42a6f/U2KXLtNavQ0.jpg"));
-                    }*/
+                    //do nothing
                 }
             }
 
         } catch (JSONException e) {
-            //i.printStackTrace();
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String sStackTrace = sw.toString();
-            Log.i("bs: ", "error: text: " + json.toString());
-            Log.i("bs: ", "error: text: " + sStackTrace);
-
+            //do nothing
         }
 
         return finalItem;
@@ -151,7 +129,6 @@ public class Repository {
 
                             @Override
                             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-                                //I don't really believe in progress
                                 // subscriber.onError(new Exception());
                             }
                         }));
