@@ -8,9 +8,15 @@ public class ItemDataSourceFactory extends DataSource.Factory {
 
     private MutableLiveData<PageKeyedDataSource<Integer, Item>> itemLiveDataSource = new MutableLiveData<>();
 
+    public static ItemDataSource getItemDataSource() {
+        return itemDataSource;
+    }
+
+    private static ItemDataSource itemDataSource;
+
     @Override
     public DataSource<Integer, Item> create() {
-        ItemDataSource itemDataSource = new ItemDataSource();
+        itemDataSource = new ItemDataSource();
 
         itemLiveDataSource.postValue(itemDataSource);
 

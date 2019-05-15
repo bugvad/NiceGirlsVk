@@ -20,16 +20,15 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, Item> callback) {
 
-        finishFlow2(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,5, LOAD_INITIAL_ID)),
+        finishFlow2(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,5, LOAD_INITIAL_ID, Constant.getFrom(), Constant.getTo())),
                 callback);
-
 
     }
 
     @Override
     public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Item> callback) {
 
-        finishFlow1(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, LOAD_BEFORE_ID)),
+        finishFlow1(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, LOAD_BEFORE_ID, Constant.getFrom(), Constant.getTo())),
                 callback, params.key);
 
 
@@ -38,7 +37,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Item> callback) {
 
-        finishFlow3(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, LOAD_AFTER_ID)),
+        finishFlow3(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE, params.key, LOAD_AFTER_ID, Constant.getFrom(), Constant.getTo())),
                 callback, params.key);
     }
 }

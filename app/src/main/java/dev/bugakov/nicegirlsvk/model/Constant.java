@@ -11,6 +11,27 @@ public class Constant {
     public static final int LOAD_BEFORE_ID = -1;
     public static final int LOAD_AFTER_ID = 1;
 
+    public static int getFrom() {
+        return from;
+    }
+
+
+
+    public static int getTo() {
+        return to;
+    }
+
+
+    public static void setFrom(int from) {
+        Constant.from = from;
+    }
+
+    public static void setTo(int to) {
+        Constant.to = to;
+    }
+
+    public static int from = 18;
+    public static int to = 25;
 
     public static boolean checkInternetConnection(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context

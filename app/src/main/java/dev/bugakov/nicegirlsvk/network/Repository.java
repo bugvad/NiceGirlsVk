@@ -34,18 +34,18 @@ public class Repository {
         return ans.substring(0, ans.length() - 1);
     }
 
-    public static VKRequest generateIdsRequest(int page_size, int key, int state) {
+    public static VKRequest generateIdsRequest(int page_size, int key, int state, int from, int to) {
 
 
         if (state == -1 || state == 1)
         {
             int offsetValue = page_size * (key - 1);
             return VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
-                    "age_from", "17", "age_to", "18", "count", 5, "offset", offsetValue)));
+                    "age_from", from, "age_to", to, "count", 5, "offset", offsetValue)));
         }
 
         return VKApi.users().search((VKParameters.from(VKApiConst.SEX, 1,
-                "age_from", "17", "age_to", "18", "count", 5)));
+                "age_from", from, "age_to", to, "count", 5)));
 
     }
 
@@ -99,7 +99,8 @@ public class Repository {
                 }
                 catch (org.json.JSONException e)
                 {
-                    try {
+                    //finalItem.add(new Item("https://pp.userapi.com/c855636/v855636140/42a6f/U2KXLtNavQ0.jpg"));
+                    /*try {
                         String jsonObject4 = jsonObject3
                                 .getJSONObject("crop_photo")
                                 .getJSONObject("photo")
@@ -109,8 +110,8 @@ public class Repository {
                         finalItem.add(new Item(jsonObject4));
                     }
                     catch (org.json.JSONException k) {
-                        finalItem.add(new Item("https://vk.com/images/camera_200.png?ava=1"));
-                    }
+                        finalItem.add(new Item("https://pp.userapi.com/c855636/v855636140/42a6f/U2KXLtNavQ0.jpg"));
+                    }*/
                 }
             }
 

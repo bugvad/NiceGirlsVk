@@ -38,8 +38,8 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
         if (item != null) {
             Picasso.with(mCtx)
                     .load(item.name)
-                    .placeholder(R.drawable.ic_ab_app)
-                    .error(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.palceholder)
+                    .error(R.drawable.errorholder)
                     .into(holder.imageView);
         }
     }

@@ -10,6 +10,8 @@ import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
 
+import dev.bugakov.nicegirlsvk.view.MainActivity;
+
 public class MyApplication extends Application {
 
     static boolean flag = true;

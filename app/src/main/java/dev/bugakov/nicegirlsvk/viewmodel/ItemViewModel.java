@@ -1,4 +1,4 @@
-package dev.bugakov.nicegirlsvk;
+package dev.bugakov.nicegirlsvk.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -14,7 +14,7 @@ import static dev.bugakov.nicegirlsvk.model.Constant.PAGE_SIZE;
 
 public class ItemViewModel extends ViewModel {
 
-    LiveData<PagedList<Item>> itemPagedList;
+    public LiveData<PagedList<Item>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, Item>> liveDataSource;
 
     public ItemViewModel() {
