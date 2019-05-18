@@ -15,23 +15,15 @@ import dev.bugakov.nicegirlsvk.view.MainActivity;
 
 public class MyApplication extends Application {
 
-    public static void setFlag(boolean flag) {
-        MyApplication.flag = flag;
-    }
-
-    static boolean flag = true;
-
-    public static boolean isFlag() {
-        return flag;
-    }
-
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(@Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken) {
             if (newToken == null) {
-                Toast.makeText(MyApplication.this, "Авторизуйтесь ВКонтакте", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyApplication.this, "Авторизуйтесь ВКонтакте",
+                        Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MyApplication.this, LoginActivity.class);
                 startActivity(intent);
+                Log.i("dd: ", "2");
             }
         }
     };
@@ -39,6 +31,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i("dd: ", "1");
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
     }

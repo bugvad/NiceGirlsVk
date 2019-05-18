@@ -4,12 +4,33 @@
     android:layout_height="match_parent"
     android:gravity="center">
     <Button
+        android:visibility="gone"
         android:onClick="Login"
-        android:id="@+id/button2"
+        android:id="@+id/button"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:background="@color/colorPrimaryDark"
         android:text="Войти" />
+    <Button
+        android:visibility="gone"
+        android:onClick="Logout"
+        android:id="@+id/button1"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:background="#D18C98"
+        android:text="Выйти" />
+    <Button
+        android:layout_marginTop="10dp"
+        android:onClick="About"
+        android:id="@+id/button2"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:background="#A0A0A0"
+        android:text="О приложении" />
 </LinearLayout>

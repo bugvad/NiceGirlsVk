@@ -26,6 +26,17 @@ public class Constant {
         Constant.to = to;
     }
 
+    public static void setIsLogged(boolean isLogged) {
+        Constant.isLogged = isLogged;
+    }
+
+    public static boolean isIsLogged() {
+        return isLogged;
+    }
+
+    private static boolean isLogged;
+
+
     public static boolean checkInternetConnection(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

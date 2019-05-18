@@ -18,7 +18,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vk.sdk.VKAccessToken;
@@ -41,8 +43,6 @@ import static dev.bugakov.nicegirlsvk.view.Utils.makeToast;
 
 public class MainActivity extends AppCompatActivity implements AddPhotoBottomDialogFragment.onsomeEventListener2 {
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -58,12 +58,27 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         setTitle("");
 
+        Button button = findViewById(R.id.button);
+        TextView alert = findViewById(R.id.alert);
+        RecyclerView recyclerView = findViewById(R.id.list);
+
+        if (VKSdk.isLoggedIn() == false)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            button.setVisibility(View.VISIBLE);
+            alert.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+
+        }
+
+
         if (!Constant.checkInternetConnection(this)){
             DialogFragment dialogFragment = new FireMissilesDialogFragment();
             dialogFragment.show(getFragmentManager(), "dialogFragment");
+            Log.i("dd: ", "5");
         }
 
-        RecyclerView recyclerView = findViewById(R.id.list);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setHasFixedSize(true);
@@ -72,10 +87,11 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
                 .get(ItemViewModel.class);
         final ItemAdapter adapter = new ItemAdapter(MainActivity.this);
 
-        itemViewModel.itemPagedList.observe(MainActivity.this,
+        itemViewModel.getItemPagedList().observe(MainActivity.this,
                 new Observer<PagedList<Item>>() {
                     @Override
                     public void onChanged(@Nullable PagedList<Item> items) {
+                        Log.i("dd: ", "4");
                         adapter.submitList(items);
 
                     }
@@ -97,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
                 .get(ItemViewModel.class);
         final ItemAdapter adapter = new ItemAdapter(MainActivity.this);
 
-        itemViewModel.itemPagedList.observe(MainActivity.this,
+        itemViewModel.getItemPagedList().observe(MainActivity.this,
                 new Observer<PagedList<Item>>() {
                     @Override
                     public void onChanged(@Nullable PagedList<Item> items) {
@@ -109,10 +125,21 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
         recyclerView.setAdapter(adapter);
     }
 
+
     public void switch_filters(MenuItem item) {
         AddPhotoBottomDialogFragment addPhotoBottomDialogFragment =
                 AddPhotoBottomDialogFragment.newInstance();
         addPhotoBottomDialogFragment.show(getSupportFragmentManager(),
                 "add_photo_dialog_fragment");
+    }
+
+    public void goton(MenuItem item) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void tologin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

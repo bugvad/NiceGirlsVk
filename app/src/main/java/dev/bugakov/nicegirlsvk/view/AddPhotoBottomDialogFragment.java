@@ -23,14 +23,15 @@ public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
         return new AddPhotoBottomDialogFragment();
     }
 
-    public static int a = 0;
-    public static int b = 0;
+    private static int a = 0;
+    private static int b = 0;
 
     public interface onsomeEventListener2 {
         public void someEvent2();
     }
 
     static AddPhotoBottomDialogFragment.onsomeEventListener2 someEventListener2;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

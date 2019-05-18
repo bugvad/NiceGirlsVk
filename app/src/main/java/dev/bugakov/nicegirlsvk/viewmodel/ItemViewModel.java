@@ -14,8 +14,16 @@ import static dev.bugakov.nicegirlsvk.model.Constant.PAGE_SIZE;
 
 public class ItemViewModel extends ViewModel {
 
-    public LiveData<PagedList<Item>> itemPagedList;
-    LiveData<PageKeyedDataSource<Integer, Item>> liveDataSource;
+    public LiveData<PagedList<Item>> getItemPagedList() {
+        return itemPagedList;
+    }
+
+    public LiveData<PageKeyedDataSource<Integer, Item>> getLiveDataSource() {
+        return liveDataSource;
+    }
+
+    private LiveData<PagedList<Item>> itemPagedList;
+    private LiveData<PageKeyedDataSource<Integer, Item>> liveDataSource;
 
     public ItemViewModel() {
         ItemDataSourceFactory itemDataSourceFactory = new ItemDataSourceFactory();

@@ -19,7 +19,11 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, Item> callback) {
 
-        finishFlow2(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,5, LOAD_INITIAL_ID, Constant.getFrom(), Constant.getTo())),
+        finishFlow2(Repository.multiobservable(Repository.generateIdsRequest(PAGE_SIZE,
+                5,
+                LOAD_INITIAL_ID,
+                Constant.getFrom(),
+                Constant.getTo())),
                 callback);
 
     }

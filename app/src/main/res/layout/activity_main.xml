@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".view.MainActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -12,4 +13,25 @@
         app:layoutManager="LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
+    <TextView
+        android:id="@+id/alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Контент доступен только авторизованным пользователям"
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="gone"/>
+
+    <Button
+        android:onClick="tologin"
+        android:layout_margin="15dp"
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:text="Войти"
+        android:background="@color/colorPrimaryDark"
+        android:visibility="gone"/>
 </LinearLayout>
