@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Log.i("dd: ", "3");
 
         button = findViewById(R.id.button);
         logout_button = findViewById(R.id.button1);
@@ -69,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
     public void Logout(View view) {
         VKSdk.logout();
         makeToast("Выход выполнен", LoginActivity.this);
-        logout_button.setVisibility(View.GONE);
         button.setVisibility(View.VISIBLE);
     }
 

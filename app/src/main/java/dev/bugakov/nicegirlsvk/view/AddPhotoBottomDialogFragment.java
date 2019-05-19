@@ -1,13 +1,10 @@
 package dev.bugakov.nicegirlsvk.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,20 +20,20 @@ public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
         return new AddPhotoBottomDialogFragment();
     }
 
-    private static int a = 0;
-    private static int b = 0;
+    private static int sleftPinIndex = 0;
+    private static int srightPinIndex = 0;
 
     public interface onsomeEventListener2 {
-        public void someEvent2();
+        public void event();
     }
 
-    static AddPhotoBottomDialogFragment.onsomeEventListener2 someEventListener2;
+    static AddPhotoBottomDialogFragment.onsomeEventListener2 eventListener;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            someEventListener2 = (AddPhotoBottomDialogFragment.onsomeEventListener2) activity;
+            eventListener = (AddPhotoBottomDialogFragment.onsomeEventListener2) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement onsomeEventListener2");
         }
@@ -48,13 +45,12 @@ public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
         View rootView = inflater.inflate(R.layout.filter_sheet, container, false);
 
         RangeBar rangebar = rootView.findViewById(R.id.rangebar);
-
         Button resultButton = rootView.findViewById(R.id.button);
 
         resultButton.setOnClickListener(v -> {
-            Constant.setFrom(a + 18);
-            Constant.setTo(b + 18);
-            someEventListener2.someEvent2();
+            Constant.setFrom(sleftPinIndex + 18);
+            Constant.setTo(srightPinIndex + 18);
+            eventListener.event();
             dismiss();
         });
 
@@ -65,8 +61,8 @@ public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
                                               int rightPinIndex,
                                               String leftPinValue,
                                               String rightPinValue) {
-                a = leftPinIndex;
-                b = rightPinIndex;
+                sleftPinIndex = leftPinIndex;
+                srightPinIndex = rightPinIndex;
             }
 
             @Override

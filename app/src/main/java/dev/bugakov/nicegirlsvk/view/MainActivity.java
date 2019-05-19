@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
         TextView alert = findViewById(R.id.alert);
         RecyclerView recyclerView = findViewById(R.id.list);
 
-        if (VKSdk.isLoggedIn() == false)
+        if (!VKSdk.isLoggedIn())
         {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
         if (!Constant.checkInternetConnection(this)){
             DialogFragment dialogFragment = new FireMissilesDialogFragment();
             dialogFragment.show(getFragmentManager(), "dialogFragment");
-            Log.i("dd: ", "5");
         }
 
 
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
                 new Observer<PagedList<Item>>() {
                     @Override
                     public void onChanged(@Nullable PagedList<Item> items) {
-                        Log.i("dd: ", "4");
                         adapter.submitList(items);
 
                     }
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements AddPhotoBottomDia
 
 
     @Override
-    public void someEvent2() {
+    public void event() {
         ItemDataSourceFactory.getItemDataSource().invalidate();
         RecyclerView recyclerView = findViewById(R.id.list);
 
